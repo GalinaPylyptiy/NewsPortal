@@ -1,28 +1,22 @@
 package com.epam.newsPortal.config;
-
-
-import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
 import javax.sql.DataSource;
 import java.util.Properties;
-
 
 @Configuration
 @EnableTransactionManagement
 
 public class HibernateConfig {
-
     @Bean
     public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
         factoryBean.setDataSource(getDataSource());
         factoryBean.setHibernateProperties(setHibernateProperties());
-        //factoryBean.setPackagesToScan("com.epam.newsPortal.entity.");
         factoryBean.setAnnotatedClasses(com.epam.newsPortal.entity.Author.class,com.epam.newsPortal.entity.Book.class );
         return factoryBean;
     }
