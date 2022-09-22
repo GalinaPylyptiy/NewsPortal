@@ -7,6 +7,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 import java.util.Properties;
+import com.epam.newsPortal.entity.*;
 
 @Configuration
 @EnableTransactionManagement
@@ -17,7 +18,7 @@ public class HibernateConfig {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
         factoryBean.setDataSource(getDataSource());
         factoryBean.setHibernateProperties(setHibernateProperties());
-        factoryBean.setAnnotatedClasses(com.epam.newsPortal.entity.Author.class,com.epam.newsPortal.entity.Book.class );
+        factoryBean.setAnnotatedClasses(Category.class,Article.class, Comment.class, Editor.class, RegisteredUser.class, User.class);
         return factoryBean;
     }
     @Bean
@@ -30,7 +31,7 @@ public class HibernateConfig {
     public static DataSource getDataSource() {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/testHibernate");
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/newsPortal");
         dataSource.setUsername("galina");
         dataSource.setPassword("u1zazgtf");
         return dataSource;
