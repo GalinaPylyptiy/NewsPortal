@@ -1,0 +1,31 @@
+ CREATE TABLE category(
+id BIGSERIAL PRIMARY KEY,
+name VARCHAR(150) NOT NULL);
+
+
+ CREATE TABLE editor(
+id BIGSERIAL PRIMARY KEY,
+first_name VARCHAR(100) NOT NULL,
+second_name VARCHAR(100) NOT NULL,
+login  VARCHAR(50) NOT NULL,
+password  VARCHAR(100) NOT NULL);
+
+CREATE TABLE article(
+id BIGSERIAL PRIMARY KEY,
+category_id BIGINT NOT NULL REFERENCES category(id),
+title VARCHAR(200) NOT NULL,
+body TEXT NOT NULL,
+dayPosted DATE NOT NULL,
+timePosted TIME WITHOUT TIME ZONE NOT NULL,
+editor_id BIGINT NOT NULL REFERENCES editor (id) );
+
+CREATE TABLE registered_user(
+id BIGSERIAL PRIMARY KEY,
+login VARCHAR(50) NOT NULL,
+password VARCHAR(100) NOT NULL);
+
+CREATE TABLE comment(
+id BIGSERIAL PRIMARY KEY,
+registered_user_id BIGINT NOT NULL REFERENCES registered_user(id),
+when_created TIMESTAMP NOT NULL,
+content TEXT NOT NULL);
