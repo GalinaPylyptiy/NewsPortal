@@ -33,8 +33,8 @@ public class IndexPageController {
         return "indexPage";
     }
 
-    @GetMapping("/editor")
-    public String enterAsEditor(@ModelAttribute("editor")Editor editor){
+    @GetMapping("/editorLogin")
+    public String enterAsEditor(){
       return "editor/signIn";
     }
 }

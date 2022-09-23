@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/editor")
@@ -20,8 +21,10 @@ public class EditorController {
     }
 
     @PostMapping("/signIn")
-    public String getEditorPage(@ModelAttribute("editor")Editor editor, Model model){
-       editor = editorService.getEditorByLoginAndPassword(editor.getLogin(), editor.getPassword());
+    public String getEditorPage(@RequestParam("login") String login,
+                                @RequestParam("password") String password,
+                                Model model){
+       Editor editor = editorService.getEditorByLoginAndPassword(login, password);
        model.addAttribute("editor", editor);
        return "editor/mainPage";
     }
