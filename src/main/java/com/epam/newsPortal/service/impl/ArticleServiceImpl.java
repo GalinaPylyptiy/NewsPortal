@@ -7,8 +7,7 @@ import com.epam.newsPortal.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -33,13 +32,18 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<Article> getArticles(Category category) {
-        return articleDAO.getArticles(category);
+    public List<Article> getAllArticles() {
+        return articleDAO.getAllArticles();
     }
 
     @Override
-    public List<Article> getArticlesByDate(LocalDate localDate) {
-        return articleDAO.getArticlesByDate(localDate);
+    public List<Article> getArticlesByCategory(Category category) {
+        return articleDAO.getArticlesByCategory(category);
+    }
+
+    @Override
+    public List<Article> getArticlesByDate(LocalDateTime localDateTime) {
+        return articleDAO.getArticlesByDate(localDateTime);
     }
 
     @Override

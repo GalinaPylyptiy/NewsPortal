@@ -1,12 +1,19 @@
 package com.epam.newsPortal.entity;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 public class Article implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -15,21 +22,25 @@ public class Article implements Serializable {
     private Category category;
     private String title;
     private String body;
-    private LocalDate dayPosted;
-    private LocalTime timePosted;
-    @ManyToOne
-    @JoinColumn(name = "editor_id")
-    private Editor editor;
+    private LocalDateTime whenPosted;
+    @OneToMany(mappedBy = "article")
+    private Collection <Comment> comments;
 
-    public Article(){}
+    public Article(){ }
 
-    public Article(Category category, String title, String body, LocalDate dayPosted, LocalTime timePosted, Editor editor) {
+    public Article(Long id, Category category, String title, String body) {
+        this.id = id;
         this.category = category;
         this.title = title;
         this.body = body;
-        this.dayPosted = dayPosted;
-        this.timePosted = timePosted;
-        this.editor = editor;
+    }
+
+    public Collection<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Collection<Comment> comments) {
+        this.comments = comments;
     }
 
     public Long getId() {
@@ -64,28 +75,12 @@ public class Article implements Serializable {
         this.body = body;
     }
 
-    public Editor getEditor() {
-        return editor;
+    public LocalDateTime getWhenPosted() {
+        return whenPosted.withNano(0);
     }
 
-    public void setEditor(Editor editor) {
-        this.editor = editor;
-    }
-
-    public LocalDate getDayPosted() {
-        return dayPosted;
-    }
-
-    public void setDayPosted(LocalDate dayPosted) {
-        this.dayPosted = dayPosted;
-    }
-
-    public LocalTime getTimePosted() {
-        return timePosted.withNano(0);
-    }
-
-    public void setTimePosted(LocalTime timePosted) {
-        this.timePosted = timePosted;
+    public void setWhenPosted(LocalDateTime whenPosted) {
+        this.whenPosted = whenPosted;
     }
 
     @Override
@@ -97,13 +92,12 @@ public class Article implements Serializable {
                 Objects.equals(category, article.category) &&
                 Objects.equals(title, article.title) &&
                 Objects.equals(body, article.body) &&
-                Objects.equals(dayPosted, article.dayPosted) &&
-                Objects.equals(timePosted, article.timePosted);
+                Objects.equals(whenPosted, article.whenPosted);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, category, title, body, dayPosted, timePosted);
+        return Objects.hash(id, category, title, body, whenPosted);
     }
 
     @Override
@@ -113,8 +107,7 @@ public class Article implements Serializable {
                 ", category=" + category +
                 ", title='" + title + '\'' +
                 ", body='" + body + '\'' +
-                ", dayPosted=" + dayPosted+
-                ", timePosted=" + timePosted+
+                ", when Posted=" + whenPosted+
                 '}';
     }
 }

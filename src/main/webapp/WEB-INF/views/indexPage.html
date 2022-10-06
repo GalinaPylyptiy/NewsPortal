@@ -5,29 +5,99 @@
     <title>Title</title>
 </head>
 <body>
-<table>
+
+<h2 th:if="${session.containsKey('user')}" >
+    <a  th:href="@{/user}" th:text="${session.user}">user</a>
+</h2>
+
+<br/>
+<table border="1" width="900" align="center" cellspacing="5" cellpadding="10">
     <tr>
-        <td><h1 align="centre">Welcome to KazNews website!!</h1></td>
+<td colspan="5" align="center">
+<h1 align="centre">Welcome to KzNews website!!</h1>
+</td>
+ <td>
+<a  th:href="@{/editorLogin}"> Enter as editor</a>
+ </td>
+<td>
+<a  th:href="@{/userLogin}"> Enter as user </a>
+</td>
+ <td>
+<a  th:href="@{/register}"> Register </a>
+  </td>
     </tr>
+</table>
+
+<table border="1" width="900" align="center" cellspacing="5" cellpadding="10">
     <tr>
-        <td>
-            <select id="category" >
-                <option>Choose category</option>
-                <option th:each = "category : ${categoryList}" th:value ="${category.id}" th:text ="${category.name}"> </option>
-            </select>
-        </td>
-        <td>
-            <a  th:href="@{/editorLogin}"> Enter as editor</a>
-        </td>
+        <th>
+            <form th:method="GET" th:action="@{/article/category}">
+                <label for="category"></label>
+                <select th:attr="name='categoryId'" id="category" >
+                    <option>--Choose category--</option>
+                    <option th:each = "category : ${categoryList}" th:value ="${category.id}" th:text ="${category.name}"> </option>
+                </select>
+                <br/>
+                <input type="submit" value="submit">
+            </form>
+        </th>
+        <th>
+              <h3>Title</h3>
+        </th>
+        <th>
+            <h3>Date</h3>
+        </th>
+        <th>
+            <h3>Time</h3>
+        </th>
+        <th>
+            <h3>Content</h3>
+        </th>
+
     </tr>
     <tr th:each="article:${freshNews}">
         <td>
-            <h1 th:text="${article.title}"></h1>
-            <h3 th:text="${article.body}"></h3>
+            <h3 th:text="${article.category.name}"></h3>
         </td>
-        <td ></td>
+        <td>
+            <h3 th:text="${article.title}"></h3>
+        </td>
+        <td>
+        <h3 th:text="${article.whenPosted.toLocalDate()}"> </h3>
+        </td>
+        <td>
+            <h3 th:text="${article.whenPosted.toLocalTime()}"> </h3>
+        </td>
+        <td>
+        <h3 th:text="${article.body}"></h3>
+      </td>
+
+        <td th:if="${session.containsKey('user')}" >
+            <a th:href="@{/comment/new(articleId=${article.id})}" >Leave comment </a>
+        </td>
     </tr>
 
+    <tr th:each="article:${articles}">
+        <td>
+            <h3 th:text="${article.category.name}"></h3>
+        </td>
+        <td>
+            <h3 th:text="${article.title}"></h3>
+        </td>
+        <td>
+            <h3 th:text="${article.whenPosted.toLocalDate()}"> </h3>
+        </td>
+        <td>
+            <h3 th:text="${article.whenPosted.toLocalTime()}"> </h3>
+        </td>
+        <td>
+            <h3 th:text="${article.body}"></h3>
+        </td>
+
+        <td th:if="${session.containsKey('user')}" >
+            <a th:href="@{/comment/new(articleId=${article.id})}" >Leave comment </a>
+        </td>
+    </tr>
 </table>
 </body>
 </html>

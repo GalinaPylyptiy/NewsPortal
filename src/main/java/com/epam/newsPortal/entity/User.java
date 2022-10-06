@@ -1,13 +1,17 @@
 package com.epam.newsPortal.entity;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.Objects;
 
-@MappedSuperclass
-public abstract class User {
+@Entity
+@Table(name = "registered_user")
+
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +19,8 @@ public abstract class User {
     private String login;
     private String password;
 
-    public User(String login, String password) {
+    public User(Long id, String login, String password) {
+        this.id = id;
         this.login = login;
         this.password = password;
     }
@@ -58,5 +63,10 @@ public abstract class User {
     @Override
     public int hashCode() {
         return Objects.hash(id, login, password);
+    }
+
+    @Override
+    public String toString() {
+        return login;
     }
 }

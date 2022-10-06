@@ -1,26 +1,33 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add new </title>
+    <title>Update article</title>
 </head>
 <body>
-<form th:method="POST" th:action="@{/article/save}" th:object="${article}">
+
+<form th:method="POST" th:action="@{/article/edit}" th:object="${article}">
+
+    <input type="hidden" th:field="*{id}">
+     <br/>
+    <input type="hidden" th:field="*{whenPosted}">
+    <br/>
     <label for="category"><h2>Choose category:</h2></label>
-    <select th:field="*{category.id}" id="category" >
+    <select th:attr="name='categoryId'" id="category" >
         <option th:each = "category : ${categoryList}" th:value ="${category.id}" th:text ="${category.name}"> </option>
     </select>
     <br/>
+
     <label for="title"><h2>Enter title:</h2></label>
     <input type="text" th:field="*{title}" id="title">
     <br/>
+
     <label for="body"><h2>Enter body:</h2></label>
     <textarea th:field="*{body}" id="body"></textarea>
     <br/>
-<!--    <input type="hidden" name="editorId" value="${editor.getId()}">-->
-    <input type="hidden" th:value="${editor.getId()}" th:attr="name='editorId'"/>
 
-    <input type="submit" value="Save"/>
+    <input type="submit" value="Update"/>
 </form>
+
 </body>
 </html>
