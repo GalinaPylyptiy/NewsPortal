@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>article</title>
+</head>
+<body>
+<table>
+    <tr>
+        <td>
+            <h2 th:text="${article.category.name}"> </h2>
+            <h3 th:text="${article.dayPosted}"> </h3>
+            <h3 th:text="${article.timePosted}"> </h3>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <h1 align="center" th:text="${article.title}"> </h1>
+        </td>
+    <tr>
+        <td>
+            <h3 th:text="${article.body}"> </h3>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <h3 th:text="${article.editor.lastName}" > </h3>
+            <h3 th:text="${article.editor.firstName}"></h3>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
