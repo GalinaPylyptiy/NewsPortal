@@ -4,11 +4,11 @@ import com.epam.newsPortal.dao.CategoryDAO;
 import com.epam.newsPortal.entity.Category;
 import com.epam.newsPortal.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
-@Component
+import java.util.Collection;
+
+
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
@@ -31,7 +31,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Category> getAll() {
+    public Collection<Category> getAll() {
         return categoryDAO.getAll();
     }
 

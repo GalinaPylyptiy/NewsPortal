@@ -5,18 +5,20 @@ import com.epam.newsPortal.entity.Article;
 import com.epam.newsPortal.entity.Comment;
 import com.epam.newsPortal.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Collection;
 
-@Component
 @Service
 
 public class CommentServiceImpl implements CommentService {
 
-    @Autowired
     private CommentDAO commentDAO;
+
+    @Autowired
+    public CommentServiceImpl(CommentDAO commentDAO) {
+        this.commentDAO = commentDAO;
+    }
 
     @Override
     public void addComment(Comment comment) {
@@ -29,12 +31,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> getAllComments() {
+    public Collection<Comment> getAllComments() {
         return commentDAO.getAllComments();
     }
 
     @Override
-    public List<Comment> getAllCommentsToThisArticle(Article article) {
+    public Collection<Comment> getAllCommentsToThisArticle(Article article) {
         return commentDAO.getAllCommentsToThisArticle(article);
     }
 

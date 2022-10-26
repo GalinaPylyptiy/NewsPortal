@@ -12,23 +12,25 @@ import java.time.LocalDateTime;
 @Component
 public class CommentMapper {
 
-    @Autowired
-    private ArticleService articleService;
+    private ArticleService articleDAO;
+
 
     @Autowired
-    private CommentDTO commentDTO;
-
-    public CommentDTO setProperties (Long articleId, LocalDateTime whenPosted) {
-        Article article = articleService.getArticle(articleId);
-        commentDTO.setArticle(article);
-        commentDTO.setWhenPosted(whenPosted);
-        return commentDTO;
+    public CommentMapper(ArticleService articleDAO) {
+        this.articleDAO = articleDAO;
     }
 
+    public void setProperties (Long articleId, LocalDateTime whenPosted,CommentDTO commentDTO) {
+        Article article = articleDAO.getArticle(articleId);
+        commentDTO.setArticle(article);
+        commentDTO.setWhenPosted(whenPosted);
+    }
 
-    public Comment map(Comment comment, CommentDTO commentDTO){
+    public Comment toModel(CommentDTO commentDTO){
+        Comment comment = new Comment();
+        comment.setContent(commentDTO.getContent());
+        comment.setWhenCreated(commentDTO.getWhenCreated());
         comment.setArticle(commentDTO.getArticle());
-        comment.setWhenCreated(commentDTO.getWhenPosted());
         return comment;
     }
 }

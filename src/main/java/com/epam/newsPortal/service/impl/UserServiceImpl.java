@@ -4,18 +4,20 @@ import com.epam.newsPortal.dao.UserDAO;
 import com.epam.newsPortal.entity.User;
 import com.epam.newsPortal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Collection;
 
 @Service
-@Component
 
 public class UserServiceImpl implements UserService {
 
-    @Autowired
     private UserDAO userDAO;
+
+    @Autowired
+    public UserServiceImpl(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
 
     @Override
     public void addUser(User user) {
@@ -28,7 +30,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public Collection <User> getAllUsers() {
         return userDAO.getAllUsers();
     }
 
@@ -45,5 +47,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByLoginAndPassword(String login, String password) {
         return userDAO.getUserByLoginAndPassword(login, password);
+    }
+
+    @Override
+    public User getUserByLogin(String login) {
+        return userDAO.getUserByLogin(login);
     }
 }

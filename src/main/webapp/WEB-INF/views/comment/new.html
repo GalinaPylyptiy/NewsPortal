@@ -5,10 +5,10 @@
     <title>Add comment</title>
 </head>
 <body>
-<form th:method="POST" th:action="@{/comment/save}" th:object="${comment}">
-    <h2 th:text="${comment.article.title}"></h2>
-    <h3 th:text="${comment.article.body}"></h3>
-    <input type="hidden" th:attr="name='articleId'" th:value="${comment.article.id}">
+<form th:method="POST" th:action="@{/comment/save}" th:object="${commentDTO}">
+    <h2 th:text="${commentDTO.article.title}"></h2>
+    <h3 th:text="${commentDTO.article.body}"></h3>
+    <input type="hidden" th:attr="name='articleId'" th:value="${commentDTO.article.id}">
     <br/>
     <label for="content"><h3>Enter your comment:</h3></label>
     <textarea th:field="*{content}" id="content"></textarea>
