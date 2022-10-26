@@ -1,27 +1,35 @@
 package com.epam.newsPortal.entity;
 
-import javax.persistence.*;
-
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
+@Table(name = "comment")
+
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
-    @ManyToOne
-    @JoinColumn(name = "registered_user_id")
-    private RegisteredUser whoCreated;
     @Column(name = "when_created")
     private LocalDateTime whenCreated;
+    @ManyToOne
+    @JoinColumn(name = "article_id", nullable = false)
+    private Article article;
 
 
-    public Comment(String content, RegisteredUser whoCreated, LocalDateTime whenCreated) {
+    public Comment(String content, LocalDateTime whenCreated, Article article) {
         this.content = content;
-        this.whoCreated = whoCreated;
         this.whenCreated = whenCreated;
+        this.article = article;
     }
 
     public Comment() {
@@ -43,20 +51,20 @@ public class Comment {
         this.content = content;
     }
 
-    public RegisteredUser getWhoCreated() {
-        return whoCreated;
-    }
-
-    public void setWhoCreated(RegisteredUser whoCreated) {
-        this.whoCreated = whoCreated;
-    }
-
     public LocalDateTime getWhenCreated() {
-        return whenCreated;
+        return whenCreated.withNano(0);
     }
 
     public void setWhenCreated(LocalDateTime whenCreated) {
         this.whenCreated = whenCreated;
+    }
+
+    public Article getArticle() {
+        return article;
+    }
+
+    public void setArticle(Article article) {
+        this.article = article;
     }
 
     @Override

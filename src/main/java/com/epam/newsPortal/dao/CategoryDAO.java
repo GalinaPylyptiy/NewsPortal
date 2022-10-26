@@ -1,7 +1,6 @@
 package com.epam.newsPortal.dao;
 
 import com.epam.newsPortal.entity.Category;
-
 import java.util.List;
 
 public interface CategoryDAO {

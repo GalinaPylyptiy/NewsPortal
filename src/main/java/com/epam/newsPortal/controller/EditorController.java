@@ -5,13 +5,23 @@ import com.epam.newsPortal.service.EditorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import static com.epam.newsPortal.constants.AttributeAndVariableNamesConstants.EDITOR;
+import static com.epam.newsPortal.constants.AttributeAndVariableNamesConstants.ERROR;
+import static com.epam.newsPortal.constants.AttributeAndVariableNamesConstants.LOGIN;
+import static com.epam.newsPortal.constants.AttributeAndVariableNamesConstants.PASSWORD;
+import static com.epam.newsPortal.constants.ErrorMessageConstants.EDITOR_LOGIN_ERROR;
+import static com.epam.newsPortal.constants.HtmlPagesDirectoryConstants.EDITOR_ERROR_PAGE;
+import static com.epam.newsPortal.constants.HtmlPagesDirectoryConstants.EDITOR_MAIN_PAGE;
 
 @Controller
-@RequestMapping("/editor")
+@RequestMapping(EDITOR)
+
 public class EditorController {
+
     private EditorService editorService;
 
     @Autowired
@@ -20,10 +30,18 @@ public class EditorController {
     }
 
     @PostMapping("/signIn")
-    public String getEditorPage(@ModelAttribute("editor")Editor editor, Model model){
-       editor = editorService.getEditorByLoginAndPassword(editor.getLogin(), editor.getPassword());
-       model.addAttribute("editor", editor);
-       return "editor/mainPage";
+    public String getEditorPage(@RequestParam(LOGIN) String login,
+                                @RequestParam(PASSWORD) String password,
+                                Model model){
+        try {
+            Editor editor = editorService.getEditorByLoginAndPassword(login, password);
+            model.addAttribute(EDITOR, editor);
+        }
+        catch (Exception e){
+            model.addAttribute(ERROR, EDITOR_LOGIN_ERROR);
+            return EDITOR_ERROR_PAGE;
+        }
+       return EDITOR_MAIN_PAGE;
     }
 
 }

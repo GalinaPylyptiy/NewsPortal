@@ -5,29 +5,42 @@
     <title>article</title>
 </head>
 <body>
-<table>
+<table  border="1" style="width: 1000px">
+    <tr>
+        <th>
+            <h2>Category</h2>
+        </th>
+        <th>
+            <h2>Day posted</h2>
+        </th>
+        <th>
+            <h2>Time posted</h2>
+        </th>
+        <th>
+            <h2>Title</h2>
+        </th>
+        <th>
+            <h2>Content</h2>
+        </th>
+    </tr>
     <tr>
         <td>
             <h2 th:text="${article.category.name}"> </h2>
-            <h3 th:text="${article.dayPosted}"> </h3>
-            <h3 th:text="${article.timePosted}"> </h3>
         </td>
-    </tr>
-    <tr>
         <td>
-            <h1 align="center" th:text="${article.title}"> </h1>
+            <h3 th:text="${article.whenPosted.toLocalDate()}"> </h3>
         </td>
-    <tr>
         <td>
-            <h3 th:text="${article.body}"> </h3>
+            <h3 th:text="${article.whenPosted.toLocalTime()}"> </h3>
         </td>
-    </tr>
-    <tr>
         <td>
-            <h3 th:text="${article.editor.lastName}" > </h3>
-            <h3 th:text="${article.editor.firstName}"></h3>
-        </td>
+            <h3 th:text="${article.title}"> </h3>
+          </td>
+        <td>
+           <h3 th:text="${article.body}"> </h3>
+          </td>
     </tr>
+    <a  th:href="@{/editorLogin}" > Return to main page</a>
 </table>
 
 </body>

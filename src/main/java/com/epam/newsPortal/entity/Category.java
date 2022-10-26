@@ -1,23 +1,31 @@
 package com.epam.newsPortal.entity;
 
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 @Table(name = "category")
 public class Category implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     @OneToMany(mappedBy = "category")
-    private List<Article> article;
+    private Collection<Article> article;
 
     public Category(){}
 
-    public Category(String name) {
+    public Category(Long id, String name) {
+        this.id = id;
         this.name = name;
     }
 
