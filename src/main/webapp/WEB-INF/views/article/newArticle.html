@@ -5,7 +5,7 @@
     <title>Add new </title>
 </head>
 <body>
-<form th:method="POST" th:action="@{/article/save}" th:object="${article}">
+<form th:method="POST" th:action="@{/article/save}" th:object="${articleDTO}">
 
     <label for="category"><h2>Choose category:</h2></label>
   <select th:attr="name='categoryId'" id="category" >

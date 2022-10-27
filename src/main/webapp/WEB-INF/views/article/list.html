@@ -48,12 +48,15 @@
         <td>
             <a th:href="@{/article/{id}/edit (id = ${article.id})}">Edit this article</a>
         </td>
+
         <td>
-            <a th:href="@{/article/{id}/delete (id = ${article.id})}">Delete this article</a>
+            <form th:method="DELETE" th:action="@{/article/{id}/delete (id = ${article.id})}">
+                <input type="submit" value="Delete article">
+            </form>
         </td>
     </tr>
 </table>
-<form th:action="@{/editorLogin}" th:method="GET">
+<form th:action="@{user/editor}" th:method="GET">
     <input type="submit" value="Return to main page ">
 </form>
 </body>

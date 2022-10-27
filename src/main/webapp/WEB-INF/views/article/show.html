@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Read article</title>
+</head>
+<body>
+<table>
+
+    <tr>
+        <td>
+            <h3 th:text="${articleDTO.category.name}"> </h3>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <h4 th:text="${articleDTO.whenPosted.toLocalDate()}"> </h4>
+            <h4 th:text="${articleDTO.whenPosted.toLocalTime()}"> </h4>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <h2 th:text="${articleDTO.title}"> </h2>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <h3 th:text="${articleDTO.body}"> </h3>
+        </td>
+    </tr>
+
+    <tr th:each="comment:${comments}">
+        <td>
+        <h4 th:text="${comment.content}"></h4>
+        <h6 th:text="${comment.whenCreated.toLocalDate()}"></h6>
+        </td>
+    </tr>
+
+    <tr>
+        <td th:if="${session.containsKey('user')}" >
+            <h3 style="color: red" th:text="${error}" ></h3>
+            <a th:href="@{/comment/new(articleId=${articleDTO.id})}" >Leave comment </a>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <a th:href="@{/}"> Main page</a>
+        </td>
+    </tr>
+
+</table>
+</body>
+</html>

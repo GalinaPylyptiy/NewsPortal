@@ -5,12 +5,12 @@
     <title>Edit user</title>
 </head>
 <body>
-<form th:method="POST" th:action="@{/user/edit}" th:object="${user}">
+<form th:method="POST" th:action="@{/user/edit}" th:object="${userDTO}">
 
 <input type="hidden" th:field="*{id}">
 <br/>
 
-<label for="login"><h2>Enter new login:</h2></label>
+<label for="login"><h2>Your login:</h2></label>
 <input type="text" th:field="*{login}" id="login">
 <br/>
 

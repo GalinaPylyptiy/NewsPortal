@@ -1,4 +1,5 @@
 package com.epam.newsPortal.entity;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
+
 public class Article implements Serializable {
 
     @Id
@@ -23,7 +25,7 @@ public class Article implements Serializable {
     private String title;
     private String body;
     private LocalDateTime whenPosted;
-    @OneToMany(mappedBy = "article")
+    @OneToMany(mappedBy = "article", cascade = CascadeType.REMOVE)
     private Collection <Comment> comments;
 
     public Article(){ }
@@ -88,16 +90,12 @@ public class Article implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Article article = (Article) o;
-        return Objects.equals(id, article.id) &&
-                Objects.equals(category, article.category) &&
-                Objects.equals(title, article.title) &&
-                Objects.equals(body, article.body) &&
-                Objects.equals(whenPosted, article.whenPosted);
+        return Objects.equals(id, article.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, category, title, body, whenPosted);
+        return Objects.hash(id);
     }
 
     @Override

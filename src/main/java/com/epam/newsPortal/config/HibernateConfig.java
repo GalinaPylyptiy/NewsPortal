@@ -2,7 +2,7 @@ package com.epam.newsPortal.config;
 import com.epam.newsPortal.entity.Category;
 import com.epam.newsPortal.entity.Article;
 import com.epam.newsPortal.entity.Comment;
-import com.epam.newsPortal.entity.Editor;
+import com.epam.newsPortal.entity.Role;
 import com.epam.newsPortal.entity.User;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +34,8 @@ public class HibernateConfig {
                 Category.class,
                 Article.class,
                 Comment.class,
-                Editor.class,
-                User.class);
+                User.class,
+                Role.class);
         return factoryBean;
     }
 

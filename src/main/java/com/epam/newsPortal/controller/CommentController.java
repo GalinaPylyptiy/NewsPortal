@@ -1,9 +1,10 @@
 package com.epam.newsPortal.controller;
 
-import com.epam.newsPortal.constants.ErrorMessageConstants;
 import com.epam.newsPortal.dto.CommentDTO;
+import com.epam.newsPortal.entity.Article;
 import com.epam.newsPortal.entity.Comment;
 import com.epam.newsPortal.entity.User;
+import com.epam.newsPortal.mapper.ArticleMapper;
 import com.epam.newsPortal.mapper.CommentMapper;
 import com.epam.newsPortal.service.ArticleService;
 import com.epam.newsPortal.service.CommentService;
@@ -17,45 +18,63 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
-import static com.epam.newsPortal.constants.AttributeAndVariableNamesConstants.ARTICLE_ID;
-import static com.epam.newsPortal.constants.AttributeAndVariableNamesConstants.COMMENT;
-import static com.epam.newsPortal.constants.AttributeAndVariableNamesConstants.ERROR;
-import static com.epam.newsPortal.constants.AttributeAndVariableNamesConstants.USER;
-import static com.epam.newsPortal.constants.HtmlPagesDirectoryConstants.COMMENT_ERROR;
-import static com.epam.newsPortal.constants.HtmlPagesDirectoryConstants.COMMENT_NEW;
-import static com.epam.newsPortal.constants.HtmlPagesDirectoryConstants.REDIRECT;
+
+import static com.epam.newsPortal.constants.AttributeNamesConstants.ARTICLE_DTO;
+import static com.epam.newsPortal.constants.AttributeNamesConstants.COMMENT_DTO;
+import static com.epam.newsPortal.constants.AttributeNamesConstants.ERROR;
+import static com.epam.newsPortal.constants.AttributeNamesConstants.USER;
+import static com.epam.newsPortal.constants.HtmlPagesPathsConstants.ARTICLE_SHOW_PAGE_PATH;
+import static com.epam.newsPortal.constants.HtmlPagesPathsConstants.NEW_COMMENT_PAGE_PATH;
 
 @Controller
+
 @RequestMapping("/comment")
 
 public class CommentController {
 
+    private final CommentService commentService;
+    private final ArticleService articleService;
+    private final CommentMapper commentMapper;
+    private final ArticleMapper articleMapper;
+    private static final String ARTICLE_ID = "articleId";
+    private static final String COMMENT_ERROR = "You need to be registered to leave comment";
+
     @Autowired
-    private CommentService commentService;
-    @Autowired
-    private ArticleService articleService;
-    @Autowired
-    private CommentMapper commentMapper;
+
+    public CommentController(CommentService commentService,
+                             ArticleService articleService,
+                             CommentMapper commentMapper,
+                             ArticleMapper articleMapper ) {
+        this.commentService = commentService;
+        this.articleService = articleService;
+        this.commentMapper = commentMapper;
+        this.articleMapper = articleMapper;
+    }
 
     @GetMapping("/new")
-    public String addComment(@ModelAttribute(COMMENT)Comment comment,
+    public String addComment(@ModelAttribute(COMMENT_DTO)CommentDTO commentDTO,
                              @RequestParam(ARTICLE_ID) String articleId,
-                             HttpSession session, Model model){
-        comment.setArticle(articleService.getArticle(Long.parseLong(articleId)));
+                             HttpSession session,
+                             Model model){
+
+        Article article = articleService.getArticle(Long.parseLong(articleId));
+        commentDTO.setArticle(article);
         User user =(User) session.getAttribute(USER);
         if(user==null){
-            model.addAttribute(ERROR, ErrorMessageConstants.COMMENT_ERROR);
-           return COMMENT_ERROR ;
+            model.addAttribute(ERROR,COMMENT_ERROR);
+            model.addAttribute(ARTICLE_DTO,articleMapper.toArticleDTO(article));
+            return ARTICLE_SHOW_PAGE_PATH;
         }
-        return COMMENT_NEW;
+        return NEW_COMMENT_PAGE_PATH;
     }
 
     @PostMapping("/save")
-    public String saveComment(@ModelAttribute(COMMENT)Comment comment,
+    public String saveComment(@ModelAttribute(COMMENT_DTO)CommentDTO commentDTO,
                               @RequestParam(ARTICLE_ID) String articleId){
-        CommentDTO commentDTO = commentMapper.setProperties(Long.parseLong(articleId), LocalDateTime.now());
-        commentMapper.map(comment, commentDTO);
+        Long id = Long.parseLong(articleId);
+        commentMapper.setProperties(id, LocalDateTime.now(), commentDTO);
+        Comment comment = commentMapper.toModel(commentDTO);
         commentService.addComment(comment);
-        return REDIRECT;
+        return "redirect:/article/" + articleId + "/show";
     }
 }
