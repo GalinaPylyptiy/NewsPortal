@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form th:method="POST" th:action="@{/article/edit}" th:object="${article}">
+<form th:method="POST" th:action="@{/article/edit}" th:object="${articleDTO}">
 
     <input type="hidden" th:field="*{id}">
      <br/>

@@ -5,7 +5,10 @@
     <title>Title</title>
 </head>
 <body>
-<form th:method="POST" th:action="@{/user/new}" th:object="${user}">
+
+  <h1 style="color: red" th:if="${session.containsKey('user')}" th:text="${session.loginExists}"></h1>
+
+<form th:method="POST" th:action="@{/user/new}" th:object="${userDTO}">
 
     <label for="login"><h2>Enter login:</h2></label>
     <input type="text" th:field="*{login}" id="login">

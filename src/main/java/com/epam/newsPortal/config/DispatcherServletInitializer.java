@@ -1,14 +1,18 @@
 package com.epam.newsPortal.config;
 
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 import javax.servlet.Filter;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 
 
 public class DispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] { HibernateConfig.class };
+        return new Class[] {HibernateConfig.class };
     }
 
     @Override
@@ -20,6 +24,7 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
     protected String[] getServletMappings() {
         return new String[]{"/"};
     }
+
     @Override
     protected Filter[] getServletFilters() {
         CharacterEncodingFilter filter = new CharacterEncodingFilter();
@@ -28,6 +33,17 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
         return new Filter[] { filter};
     }
 
+    @Override
+    public void onStartup(ServletContext aServletContext) throws ServletException {
+        super.onStartup(aServletContext);
+        registerHiddenFieldFilter(aServletContext);
+
+    }
+
+    private void registerHiddenFieldFilter(ServletContext aContext) {
+        aContext.addFilter("hiddenHttpMethodFilter",
+                new HiddenHttpMethodFilter()).addMappingForUrlPatterns(null ,true, "/*");
+    }
 
 }
 

@@ -3,24 +3,26 @@ package com.epam.newsPortal.dao.impl;
 import com.epam.newsPortal.dao.CategoryDAO;
 import com.epam.newsPortal.entity.Category;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
-import java.util.List;
+import java.util.Collection;
 
-@Component
+
 @Repository
+
 public class CategoryDAOImpl implements CategoryDAO {
 
-    @Autowired
     private EntityManagerFactory entityManagerFactory;
 
+    @Autowired
+    public CategoryDAOImpl(EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
+    }
+
     @Override
-    @Transactional
     public void addCategory(Category category) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
@@ -30,7 +32,6 @@ public class CategoryDAOImpl implements CategoryDAO {
         entityManager.close();
     }
 
-    @Transactional
     @Override
     public Category getCategoryById(Long id) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -40,17 +41,15 @@ public class CategoryDAOImpl implements CategoryDAO {
     }
 
     @Override
-    @Transactional
-    public List<Category> getAll() {
+    public Collection<Category> getAll() {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         Query query = entityManager.createQuery("select c from Category c", Category.class);
-        List<Category> categories = query.getResultList();
+        Collection<Category> categories = query.getResultList();
         entityManager.close();
         return categories;
     }
 
     @Override
-    @Transactional
     public void updateCategory(Category newCategory) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
        entityManager.refresh(newCategory);
@@ -58,7 +57,6 @@ public class CategoryDAOImpl implements CategoryDAO {
     }
 
     @Override
-    @Transactional
     public void delete(Category category) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.remove(category);
