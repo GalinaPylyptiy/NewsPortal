@@ -8,19 +8,19 @@
 <table width="900" align="center" cellspacing="5" cellpadding="10">
     <tr>
         <th>
-            <h2>Category</h2>
+            <h2 th:text="#{label.category}"></h2>
         </th>
         <th>
-            <h2>Day posted</h2>
+            <h2 th:text="#{label.date}"></h2>
         </th>
         <th>
-            <h2>Time posted</h2>
+            <h2 th:text="#{label.time}"></h2>
         </th>
         <th>
-            <h2>Title</h2>
+            <h2 th:text="#{label.title}"></h2>
         </th>
         <th>
-            <h2>Content</h2>
+            <h2 th:text="#{label.content}"></h2>
         </th>
     </tr>
     <tr>
@@ -43,7 +43,7 @@
 
 </table>
 
-<a th:href="@{/user/editor}"> Return to main page</a>
+<a th:href="@{/user/editor}" th:text="#{reference.editorPage}"></a>
 
 </body>
 

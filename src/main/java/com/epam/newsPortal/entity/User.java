@@ -1,7 +1,9 @@
 package com.epam.newsPortal.entity;
 
 
-import javax.persistence.CascadeType;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,7 +21,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "registered_user")
 
-public class User implements Serializable {
+public class User implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

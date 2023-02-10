@@ -29,10 +29,11 @@ public class IndexPageController {
     public IndexPageController(CategoryService categoryService, ArticleService articleService) {
         this.categoryService = categoryService;
         this.articleService = articleService;
+
     }
 
     @GetMapping("")
-    public String getIndexPage( Model model){
+    public String getIndexPage(Model model){
         model.addAttribute(CATEGORY_LIST, categoryService.getAll());
         model.addAttribute(FRESH_NEWS, articleService.getAllArticles());
         return INDEX_PAGE_PATH;

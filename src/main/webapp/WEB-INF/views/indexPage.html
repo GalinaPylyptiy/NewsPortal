@@ -1,35 +1,56 @@
 <!DOCTYPE html>
-<html lang="en"   xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+
+
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Title</title>
 </head>
 <body>
+        <a href="?lang=en" th:text="#{lang.english}" ></a>
+ <br/>
+        <a href="?lang=ru_RU" th:text="#{lang.russian}"></a>
 
 <table width="900" align="center" cellspacing="5" cellpadding="10">
     <tr>
-
+        <div sec:authorize="not isAuthenticated()">
+            <td>
+                <a  th:href="@{/userLogin}" th:text="#{reference.login}"> </a>
+            </td>
+            <td>
+                <a  th:href="@{/register}" th:text="#{reference.register}">  </a>
+            </td>
+        </div>
+            <div sec:authorize="isAuthenticated()">
         <td>
-        <h2 th:if="${session.containsKey('user')}" >
-
-             <a  th:href="@{/user}" th:text="${session.user}">user</a>
-
-        </h2>
+            <div sec:authorize="hasRole('ROLE_USER')">
+                <h2>
+                <a  th:href="@{/user}"  th:text="${#authentication.principal.username}"></a>
+                </h2>
+            </div>
         </td>
-       <td>
-            <a  th:href="@{/userLogin}"> Log in </a>
-       </td>
-
-       <td>
-             <a  th:href="@{/register}"> Register </a>
+                <td>
+            <div sec:authorize="hasRole('ROLE_EDITOR')">
+                <a th:href="@{/user/editor}" th:text="#{reference.editorPage}"></a>
+            </div>
+                </td>
+                <td>
+            <div sec:authorize="hasRole('ROLE_ADMIN')">
+                <a th:href="@{/user/admin}" th:text="#{reference.adminPage}"> </a>
+            </div>
         </td>
+                <td>
+                    <a th:href="@{/logout}" th:text="#{reference.logout}"></a>
+                </td>
+          </div>
     </tr>
 
     <tr>
        <td>
-          <h1 align="center"  style="color: darkblue">
-              Welcome to KzNews website!!
-          </h1>
+
+           <h1 align="center"  style="color: darkblue" th:text="#{greeting}"></h1>
        </td>
    </tr>
 
@@ -40,21 +61,24 @@
         <th th:each="category : ${categoryList}">
            <a style="color: crimson " th:href="@{/article/category(categoryId = ${category.id})}" th:text ="${category.name}" ></a>
         </th>
+        <th>
+            <a style="color: crimson " th:href="@{/}" th:text="#{label.allNews}"></a>
+        </th>
     </tr>
 </table>
 
 <table width="900" align="center" cellspacing="5" cellpadding="10">
         <th>
-            <h3 style="color: darkslateblue">Title</h3>
+            <h3 style="color: darkslateblue" th:text="#{label.title}"></h3>
         </th>
         <th>
-            <h3 style="color: darkslateblue">Category</h3>
+            <h3 style="color: darkslateblue" th:text="#{label.category}"></h3>
         </th>
         <th>
-            <h3 style="color: darkslateblue">Date</h3>
+            <h3 style="color: darkslateblue" th:text="#{label.date}"></h3>
         </th>
         <th>
-            <h3 style="color: darkslateblue">Time</h3>
+            <h3 style="color: darkslateblue" th:text="#{label.time}"></h3>
         </th>
 
     </tr>

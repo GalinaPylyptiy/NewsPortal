@@ -8,25 +8,25 @@
 <table border="1" width="900" align="center" cellspacing="5" cellpadding="10">
     <tr>
         <th>
-            <h1>Category</h1>
+            <h1 th:text="#{label.category}"></h1>
         </th>
         <th>
-            <h1>Title</h1>
+            <h1 th:text="#{label.title}"></h1>
         </th>
         <th>
-            <h1>Date</h1>
+            <h1 th:text="#{label.date}"></h1>
         </th>
         <th>
-            <h1>Time</h1>
+            <h1 th:text="#{label.time}"></h1>
         </th>
         <th>
-            <h1>Content</h1>
+            <h1 th:text="#{label.content}"></h1>
         </th>
         <th>
-            <h1>Edit</h1>
+            <h1 th:text="#{label.edit}"></h1>
         </th>
         <th>
-            <h1>Delete</h1>
+            <h1 th:text="#{label.delete}"></h1>
         </th>
     </tr>
     <tr th:each="article:${articles}">
@@ -46,18 +46,18 @@
             <h3 th:text="${article.body}"></h3>
         </td>
         <td>
-            <a th:href="@{/article/{id}/edit (id = ${article.id})}">Edit this article</a>
+            <a th:href="@{/article/{id}/edit (id = ${article.id})}" th:text="#{reference.edit.article}"></a>
         </td>
 
         <td>
             <form th:method="DELETE" th:action="@{/article/{id}/delete (id = ${article.id})}">
-                <input type="submit" value="Delete article">
+                <input type="submit" value="Delete article" th:text="#{reference.delete.article}">
             </form>
         </td>
     </tr>
 </table>
 <form th:action="@{user/editor}" th:method="GET">
-    <input type="submit" value="Return to main page ">
+    <input type="submit" value="Return to main page" th:text="#{reference.return.editorPage}">
 </form>
 </body>
 </html>

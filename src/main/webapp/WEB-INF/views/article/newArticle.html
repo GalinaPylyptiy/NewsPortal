@@ -1,27 +1,31 @@
 <!DOCTYPE html>
 <html lang="en"  xmlns:th="http://thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Add new </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Add new article </title>
 </head>
+
 <body>
+
 <form th:method="POST" th:action="@{/article/save}" th:object="${articleDTO}">
 
-    <label for="category"><h2>Choose category:</h2></label>
+    <label for="category"><h2 th:text="#{message.chooseCategory}"></h2></label>
   <select th:attr="name='categoryId'" id="category" >
         <option th:each = "category : ${categoryList}" th:value ="${category.id}" th:text ="${category.name}"> </option>
     </select>
     <br/>
 
-    <label for="title"><h2>Enter title:</h2></label>
+    <label for="title"><h2 th:text="#{message.title}"></h2></label>
     <input type="text" th:field="*{title}" id="title">
     <br/>
 
-    <label for="body"><h2>Enter body:</h2></label>
+    <label for="body"><h2 th:text="#{message.body}"></h2></label>
     <textarea th:field="*{body}" id="body"></textarea>
     <br/>
 
-    <input type="submit" value="Save"/>
+    <input type="submit" th:value="#{button.save}"/>
+
 </form>
 </body>
 </html>

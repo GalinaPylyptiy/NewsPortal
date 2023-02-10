@@ -5,19 +5,21 @@
     <title>Sign in</title>
 </head>
 <body>
-<h1 style="color: darkslateblue">Sign in as user:</h1>
+<h2 style="color: darkslateblue" th:text="#{message.signIn}"></h2>
 
-<span style="color: red" th:if="${session.containsKey('noUser')}" th:text="${session.noUser}"></span>
+<span style="color: red" th:if="${param.error != null}"> <h1 th:text="#{error.signIn}"></h1>
+</span>
 
 <form th:method="POST" th:action="@{/user/signIn}" th:object="${userDTO}">
 
-    <label for="login"><h2>Enter your login:</h2></label>
+    <label for="login"><h2 th:text="#{message.enterLogin}"></h2></label>
     <input type="text" th:field="*{login}" id="login">
     <br/>
-    <label for="password"><h2>Enter your password:</h2></label>
+    <label for="password"><h2 th:text="#{message.enterPassword}"></h2></label>
     <input type="password" th:field="*{password}" id="password">
     <br/>
-    <input type="submit" value="Submit"/>
+    <input type="submit"  th:value="#{button.submit}"/>
 </form>
+
 </body>
 </html>

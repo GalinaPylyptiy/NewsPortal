@@ -12,21 +12,21 @@
      <br/>
     <input type="hidden" th:field="*{whenPosted}">
     <br/>
-    <label for="category"><h2>Choose category:</h2></label>
+    <label for="category"><h2 th:text="#{message.chooseCategory}"></h2></label>
     <select th:attr="name='categoryId'" id="category" >
         <option th:each = "category : ${categoryList}" th:value ="${category.id}" th:text ="${category.name}"> </option>
     </select>
     <br/>
 
-    <label for="title"><h2>Enter title:</h2></label>
+    <label for="title"><h2 th:text="#{message.title}"></h2></label>
     <input type="text" th:field="*{title}" id="title">
     <br/>
 
-    <label for="body"><h2>Enter body:</h2></label>
+    <label for="body"><h2 th:text="#{message.body}"></h2></label>
     <textarea th:field="*{body}" id="body"></textarea>
     <br/>
 
-    <input type="submit" value="Update"/>
+    <input type="submit" th:value="#{button.update}"/>
 </form>
 
 </body>
