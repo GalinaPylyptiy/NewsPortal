@@ -1,5 +1,7 @@
 package com.epam.newsPortal.entity;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,12 +25,18 @@ public class Role implements Serializable {
     private String roleName;
 
     @ManyToMany(mappedBy = "userRoles")
-    private Collection <User> user;
+    private Collection<User> user;
 
-    public Role(){}
+    public Role() {
+    }
 
-    public Role(String roleName) {
+    public Role(Long id, String roleName) {
+        this.id = id;
         this.roleName = roleName;
+    }
+
+    public Role(Long id) {
+        this.id = id;
     }
 
     public Long getId() {
@@ -52,3 +60,4 @@ public class Role implements Serializable {
         return "roleName=" + roleName;
     }
 }
+

@@ -14,7 +14,7 @@ public final class HtmlPagesPathsConstants {
         public final static String EDITOR_MAIN_PAGE_PATH = "editor/mainPage";
         public final static String USER_SIGN_IN_PAGE_PATH = "user/signIn";
         public final static String REDIRECT_TO_INDEX_PAGE = "redirect:/";
-        public final static String USER_REGISTER_PAGE_PATH = "user/register";
+        public final static String USER_REGISTER_PAGE_PATH = "/register";
         public final static String REDIRECT_TO_USER_LOGIN_PAGE = "redirect:/userLogin";
         public final static String REDIRECT_TO_REGISTER_USER_PAGE = "redirect:/register";
         public final static String USER_PROFILE_PAGE_PATH = "user/profile";

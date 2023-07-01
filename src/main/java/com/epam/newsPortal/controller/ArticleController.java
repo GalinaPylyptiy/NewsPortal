@@ -26,8 +26,8 @@ import static com.epam.newsPortal.constants.AttributeNamesConstants.ARTICLE_DTO;
 import static com.epam.newsPortal.constants.AttributeNamesConstants.CATEGORY_LIST;
 import static com.epam.newsPortal.constants.AttributeNamesConstants.COMMENTS;
 import static com.epam.newsPortal.constants.HtmlPagesPathsConstants.ADD_NEW_ARTICLE_PAGE_PATH;
-import static com.epam.newsPortal.constants.HtmlPagesPathsConstants.ARTICLE_LIST_PAGE_PATH;
 import static com.epam.newsPortal.constants.HtmlPagesPathsConstants.ARTICLE_SHOW_PAGE_PATH;
+import static com.epam.newsPortal.constants.HtmlPagesPathsConstants.EDITOR_MAIN_PAGE_PATH;
 import static com.epam.newsPortal.constants.HtmlPagesPathsConstants.EDIT_ARTICLE_PAGE_PATH;
 import static com.epam.newsPortal.constants.HtmlPagesPathsConstants.INDEX_PAGE_PATH;
 import static com.epam.newsPortal.constants.HtmlPagesPathsConstants.REDIRECT_TO_ARTICLE_LIST_PAGE_PATH;
@@ -61,7 +61,7 @@ public class ArticleController {
     @GetMapping("")
     public String showAllArticles(Model model){
         model.addAttribute(ARTICLES, articleService.getAllArticles());
-        return ARTICLE_LIST_PAGE_PATH;
+        return EDITOR_MAIN_PAGE_PATH;
     }
 
     @GetMapping("/category")
@@ -81,6 +81,15 @@ public class ArticleController {
         return ADD_NEW_ARTICLE_PAGE_PATH ;
     }
 
+    @PostMapping("/save")
+    public String saveArticle(@ModelAttribute(ARTICLE_DTO)ArticleDTO articleDTO,
+                              @RequestParam(CATEGORY_ID) String categoryId){
+
+        articleMapper.setProperties(Long.parseLong(categoryId), LocalDateTime.now(), articleDTO);
+        Article article = articleMapper.toModel(articleDTO);
+        articleService.addArticle(article);
+        return SEE_NEW_ARTICLE_PAGE_PATH;
+    }
 
     @GetMapping("/{id}/edit")
     public String editArticle(@PathVariable(ID) String id,
@@ -109,15 +118,6 @@ public class ArticleController {
         return REDIRECT_TO_ARTICLE_LIST_PAGE_PATH;
     }
 
-    @PostMapping("/save")
-    public String saveArticle(@ModelAttribute(ARTICLE_DTO)ArticleDTO articleDTO,
-                              @RequestParam(CATEGORY_ID) String categoryId){
-
-        articleMapper.setProperties(Long.parseLong(categoryId), LocalDateTime.now(), articleDTO);
-        Article article = articleMapper.toModel(articleDTO);
-        articleService.addArticle(article);
-        return SEE_NEW_ARTICLE_PAGE_PATH;
-    }
 
     @GetMapping("/{id}/show")
     public String showArticle(@PathVariable(ID) String articleId,

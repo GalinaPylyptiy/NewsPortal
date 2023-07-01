@@ -9,20 +9,11 @@
 <h2 th:text="${user.login}"> </h2>
 <br/>
 
-<a th:href="@{/user/{id}/ (id = ${user.id})}">Edit my data</a>
-<br/>
-<a th:href="@{/user/logout}">Log out</a>
-
-<br/>
-<a th:href="@{/}"> Main page</a>
+<a th:href="@{/user/{id}/ (id = ${user.id})}" th:text="#{reference.edit.data}"></a>
 <br/>
 
-<div th:each="role:${userRoles}" th:if="${(role.roleName).equals('Editor')}">
-
-<a th:href="@{/user/editor}"> Go to Editor page </a>
-
-</div>
-
+<a th:href="@{/}" th:text="#{reference.mainPage}"></a>
+<br/>
 
 </body>
 </html>

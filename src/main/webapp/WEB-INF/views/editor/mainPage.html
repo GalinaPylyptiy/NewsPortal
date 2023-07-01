@@ -8,19 +8,68 @@
 <table width="900" align="center" cellspacing="5" cellpadding="10">
     <tr>
         <td>
-        <h2 th:if="${session.containsKey('user')}" >
-
-            <a  th:href="@{/user}" th:text="${session.user}">user</a>
-
-        </h2>
+            <h1>
+            <a  th:href="@{/user}"  th:text="${#authentication.principal.username}">user </a>
+            </h1>
         </td>
     </tr>
     <tr>
         <td>
-            <a  th:href="@{/article/new}" > Add new article</a>
+            <a  th:href="@{/article/new}" th:text="#{reference.new.article}"> Add new article</a>
         </td>
         <td>
-            <a  th:href="@{/article}" > Show list of articles </a>
+            <a th:href="@{/}" th:text="#{reference.mainPage}" ></a>
+        </td>
+    </tr>
+</table>
+<table border="1" width="900" align="center" cellspacing="5" cellpadding="10">
+    <tr>
+        <th>
+            <h1 th:text="#{label.category}"></h1>
+        </th>
+        <th>
+            <h1 th:text="#{label.title}"></h1>
+        </th>
+        <th>
+            <h1 th:text="#{label.date}"></h1>
+        </th>
+        <th>
+            <h1 th:text="#{label.time}"></h1>
+        </th>
+        <th>
+            <h1 th:text="#{label.content}"></h1>
+        </th>
+        <th>
+            <h1 th:text="#{label.edit}"></h1>
+        </th>
+        <th>
+            <h1 th:text="#{label.delete}"></h1>
+        </th>
+    </tr>
+    <tr th:each="article:${articles}">
+        <td>
+            <h3 th:text="${article.category.name}"></h3>
+        </td>
+        <td>
+            <h3 th:text="${article.title}"></h3>
+        </td>
+        <td>
+            <h3 th:text="${article.whenPosted.toLocalDate()}"> </h3>
+        </td>
+        <td>
+            <h3 th:text="${article.whenPosted.toLocalTime()}"> </h3>
+        </td>
+        <td>
+            <h3 th:text="${article.body}"></h3>
+        </td>
+        <td>
+            <a th:href="@{/article/{id}/edit (id = ${article.id})}" th:text="#{reference.edit.article}"></a>
+        </td>
+
+        <td>
+            <form th:method="DELETE" th:action="@{/article/{id}/delete (id = ${article.id})}">
+                <input type="submit" th:value="#{reference.delete.article}">
+            </form>
         </td>
     </tr>
 </table>

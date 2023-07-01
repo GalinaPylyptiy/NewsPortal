@@ -2,8 +2,8 @@ package com.epam.newsPortal.dao.impl;
 
 import com.epam.newsPortal.dao.UserDAO;
 import com.epam.newsPortal.entity.User;
-import com.epam.newsPortal.util.PasswordHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -17,12 +17,14 @@ import java.util.Collection;
 public class UserDAOImpl implements UserDAO {
 
     private EntityManagerFactory entityManagerFactory;
+    private BCryptPasswordEncoder passwordEncoder;
     private static final String LOGIN = "login";
     private static final String PASSWORD = "password";
 
     @Autowired
-    public UserDAOImpl(EntityManagerFactory entityManagerFactory) {
+    public UserDAOImpl(EntityManagerFactory entityManagerFactory, BCryptPasswordEncoder passwordEncoder) {
         this.entityManagerFactory = entityManagerFactory;
+        this.passwordEncoder=passwordEncoder;
     }
 
     @Override
@@ -30,7 +32,7 @@ public class UserDAOImpl implements UserDAO {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
-        user.setPassword(PasswordHandler.reversePassword(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         entityManager.persist(user);
         transaction.commit();
         entityManager.close();
@@ -71,7 +73,7 @@ public class UserDAOImpl implements UserDAO {
         transaction.begin();
         User oldUserData = entityManager.find(User.class, user.getId());
         user.setUserRoles(oldUserData.getUserRoles());
-        user.setPassword(PasswordHandler.reversePassword(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         entityManager.merge(user);
         transaction.commit();
         entityManager.close();
@@ -81,7 +83,7 @@ public class UserDAOImpl implements UserDAO {
     public User getUserByLoginAndPassword(String login, String password) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         Query query = entityManager.createQuery("select u from User u where u.login = :login AND u.password = :password")
-                .setParameter(LOGIN, login).setParameter(PASSWORD,PasswordHandler.reversePassword(password) );
+                .setParameter(LOGIN, login).setParameter(PASSWORD,passwordEncoder.encode(password) );
         User user = (User) query.getSingleResult();
         entityManager.close();
         return user;

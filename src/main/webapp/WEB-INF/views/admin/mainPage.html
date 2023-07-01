@@ -4,35 +4,30 @@
     <meta charset="UTF-8">
     <title>Admin page</title>
 </head>
+
 <body>
 
-<h2 th:if="${session.containsKey('user')}" >
-    <a  th:href="@{/user}" th:text="${session.user}">user</a>
-</h2>
+<h1>
+<a  th:href="@{/user}"  th:text="${#authentication.principal.username}">user </a>
+</h1>
 
 <table border="1" width="900" align="center" cellspacing="5" cellpadding="10">
     <tr>
         <td>
-            <h2 style="color: darkslateblue">User id</h2>
+            <h3 style="color: darkslateblue" th:text="#{label.user.login}"></h3>
         </td>
         <td>
-            <h2 style="color: darkslateblue">User login</h2>
+            <h3 style="color: darkslateblue" th:text="#{label.user.roles}"></h3>
         </td>
         <td>
-            <h2 style="color: darkslateblue">User roles</h2>
+            <h3 style="color: darkslateblue" th:text="#{label.add.new.role}"></h3>
         </td>
         <td>
-            <h2 style="color: darkslateblue">Add new role to a user</h2>
-        </td>
-        <td>
-            <h2 style="color: darkslateblue">Delete role of a user</h2>
+            <h3 style="color: darkslateblue" th:text="#{label.delete.role}"></h3>
         </td>
     </tr>
 
     <tr th:each="user:${allUsers}">
-        <td>
-           <h3 th:text="${user.id}"></h3>
-        </td>
         <td>
             <h3 th:text="${user.login}"></h3>
         </td>
@@ -49,7 +44,7 @@
                 <input type="checkbox" name="role"
                        th:value="${admin.roleName}" th:text="${admin.roleName}" >
                 <br/>
-                <input type="submit" value="Add role">
+                <input type="submit"  th:value="#{button.add.role}">
             </form>
         </td>
         <td>
@@ -60,7 +55,7 @@
                 <input type="checkbox" name="role"
                        th:value="${admin.roleName}" th:text="${admin.roleName}" >
                 <br/>
-                <input type="submit" value="Delete role">
+                <input type="submit" th:value="#{button.delete.role}">
             </form>
         </td>
     </tr>

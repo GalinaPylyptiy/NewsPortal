@@ -10,15 +10,15 @@
 <input type="hidden" th:field="*{id}">
 <br/>
 
-<label for="login"><h2>Your login:</h2></label>
+<label for="login"><h2 th:text="#{message.your.login}">Your login:</h2></label>
 <input type="text" th:field="*{login}" id="login">
 <br/>
 
-<label for="password"><h2>Enter new password:</h2></label>
+<label for="password"><h2 th:text="#{message.new.password}">Enter new password:</h2></label>
 <input type="password" th:field="*{password}" id="password">
 <br/>
 
-<input type="submit" value="Update"/>
+<input type="submit" th:value="#{button.update}" />
 </form>
 
 </body>

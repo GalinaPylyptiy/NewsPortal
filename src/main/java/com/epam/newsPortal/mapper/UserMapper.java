@@ -15,7 +15,7 @@ import java.util.Collections;
 public class UserMapper {
 
     private RoleDAO roleDAO;
-    private final String userRole = "User";
+    private final String userRole = "USER";
 
     @Autowired
     public UserMapper(RoleDAO roleDAO) {
